@@ -1,10 +1,414 @@
 @import "tailwindcss";
 
-html {
-  scroll-behavior: smooth;
+
+/* Hero atmosphere */
+.hero {
+  background: #172638;
+  isolation: isolate;
 }
 
-body {
-  margin: 0;
-  min-width: 320px;
+.hero-landscape {
+  background-image: url("/images/nier-lake.jpg");
+  background-size: cover;
+  background-position: center 55%;
+  transform: scale(1.04);
+  animation: landscape-drift 24s ease-in-out infinite alternate;
+}
+
+.hero-atmosphere {
+  background:
+    linear-gradient(90deg,
+      rgba(78, 108, 146, 0.94) 0%,
+      rgba(19, 32, 51, 0.78) 36%,
+      rgba(30, 40, 65, 0.30) 68%,
+      rgba(36, 54, 88, 0.2) 100%),
+    linear-gradient(0deg,
+      rgba(23, 41, 63, 0.48),
+      transparent 35%,
+      rgba(12, 24, 40, 0.12));
+}
+
+.hero-light {
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at 70% 38%,
+    rgba(122, 106, 179, 0.22),
+    rgba(125, 205, 225, 0.10) 30%,
+    transparent 65%
+  );
+  animation: light-breathe 9s ease-in-out infinite alternate;
+}
+
+.hero-title {
+  color: #f3f3f7;
+  text-shadow: 0 2px 28px rgba(15, 22, 45, 0.2);
+}
+
+.hero-gradient-text {
+  background: linear-gradient(
+    100deg,
+    #95bedf,
+    #9173d5 48%,
+    #d78bbd
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.hero-primary-button {
+  background: linear-gradient(110deg, #8a9ed4, #7c61c1 55%, #cb7bc0);
+  box-shadow: 0 8px 30px rgba(155, 130, 240, 0.22);
+  transition: transform 250ms ease, box-shadow 250ms ease;
+}
+
+.hero-primary-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(116, 100, 170, 0.4);
+}
+
+/* Portrait softly merges into the background */
+.hero-portrait-wrap {
+  width: 70%;
+  height: fit-content;
+  margin: auto;
+}
+
+.hero-portrait {
+  position: relative;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 72%,
+    rgba(0, 0, 0, 0.85) 88%,
+    transparent 100%
+  );
+}
+
+.hero-portrait-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 50% 50% 65% 65% / 40% 40% 25% 25%;
+}
+
+.hero-portrait-blend {
+  background:
+    linear-gradient(0deg, rgba(20, 28, 48, 0.38), transparent 38%),
+    linear-gradient(90deg, rgba(100, 115, 160, 0.18), transparent 35%),
+    linear-gradient(180deg, rgba(202, 190, 245, 0.12), transparent 40%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.hero-orbit {
+  position: absolute;
+  inset: 5%;
+  border: 1px solid rgba(158, 136, 209, 0.4);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero-orbit-one {
+  transform: rotate(-25deg) scaleX(0.82);
+  animation: orbit-spin 30s linear infinite;
+}
+
+.hero-orbit-two {
+  inset: -3% 10%;
+  border-color: rgba(179, 234, 244, 0.32);
+  transform: rotate(32deg) scaleX(0.8);
+  animation: orbit-spin 38s linear infinite reverse;
+}
+
+.hero-particle {
+  position: absolute;
+  z-index: -1;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #d9c7ff;
+  box-shadow: 0 0 14px 3px rgba(202, 177, 255, 0.5);
+  pointer-events: none;
+  animation: particle-drift 7s ease-in-out infinite;
+}
+
+.hero-floating-label {
+  animation: label-float 5s ease-in-out infinite;
+}
+
+
+
+@keyframes landscape-drift {
+  from { transform: scale(1.04) translate3d(0, 0, 0); }
+  to { transform: scale(1.10) translate3d(-1%, 1%, 0); }
+}
+
+@keyframes light-breathe {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
+@keyframes portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes orbit-spin {
+  from { rotate: 0deg; }
+  to { rotate: 360deg; }
+}
+
+@keyframes particle-drift {
+  0%, 100% { transform: translate3d(0, 0, 0); opacity: 0.25; }
+  50% { transform: translate3d(10px, -24px, 0); opacity: 0.9; }
+}
+
+@keyframes label-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .hero-atmosphere {
+    background: linear-gradient(
+      180deg,
+      rgba(12, 24, 40, 0.92),
+      rgba(19, 32, 51, 0.72) 60%,
+      rgba(12, 24, 40, 0.55)
+    );
+  }
+
+  .hero-portrait-wrap {
+    width: 85%;
+  }
+
+  .hero-floating-label {
+    display: none;
+  }
+}
+
+/* Respect reduced-motion accessibility preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-landscape,
+  .hero-light,
+  .hero-portrait-wrap,
+  .hero-orbit,
+  .hero-particle,
+  .hero-floating-label {
+    animation: none !important;
+  }
+
+  .hero-primary-button {
+    transition: none;
+  }
+}
+
+
+/* Smooth navigation and section spacing */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+#about,
+#skills,
+#projects,
+#contact {
+  scroll-margin-top: 100px;
+}
+
+/* About section: matching the blue-lavender hero */
+.about-section {
+  background:
+    linear-gradient(
+      135deg,
+      #263850 0%,
+      #242b45 42%,
+      #302b4b 72%,
+      #253b50 100%
+    );
+}
+
+/* Soft ambient light */
+.about-glow {
+  position: absolute;
+  z-index: -1;
+  width: 38rem;
+  height: 38rem;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.17;
+  pointer-events: none;
+  animation: about-glow-drift 18s ease-in-out infinite alternate;
+}
+
+.about-glow-one {
+  top: -12rem;
+  left: -15rem;
+  background: #83bfff;
+}
+
+.about-glow-two {
+  right: -14rem;
+  bottom: -16rem;
+  background: #c59bff;
+  animation-delay: -8s;
+}
+
+/* Small floating particles */
+.about-stars {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.about-star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #e0d5ff;
+  box-shadow: 0 0 12px 2px rgb(190 174 255 / 40%);
+  animation: about-star-float 7s ease-in-out infinite;
+}
+
+/* Lavender and pink gradient heading */
+.about-gradient-text {
+  background: linear-gradient(
+    100deg,
+    #a8d8ff,
+    #c2a7ff 48%,
+    #f0b7dc
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/* Animated skill level lines */
+.skill-level-fill {
+  width: var(--skill-level);
+  background: linear-gradient(
+    90deg,
+    #91d8ff,
+    #b8a5ff 55%,
+    #edb1dc
+  );
+  box-shadow: 0 0 10px rgb(177 158 255 / 30%);
+  animation: skill-fill-in 1.2s ease-out both;
+  transform-origin: left;
+}
+
+/* Soft movement */
+@keyframes about-glow-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(35px, -25px, 0) scale(1.12);
+  }
+}
+
+@keyframes about-star-float {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.2;
+  }
+  50% {
+    transform: translateY(-22px);
+    opacity: 0.85;
+  }
+}
+
+@keyframes skill-fill-in {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .about-glow,
+  .about-star,
+  .skill-level-fill {
+    animation: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Seamless transition from Home into About */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 220px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(38 56 80 / 25%) 30%,
+    rgb(38 49 72 / 65%) 65%,
+    #263850 100%
+  );
+}
+
+/* The top of About continues the same colors */
+.about-section {
+  background:
+    radial-gradient(
+      ellipse at 75% 0%,
+      rgb(174 151 255 / 18%),
+      transparent 48%
+    ),
+    linear-gradient(
+      to bottom,
+      #263850 0%,
+      #242b45 35%,
+      #302b4b 72%,
+      #253b50 100%
+    );
+}
+
+/* Soft atmospheric glow at the boundary */
+.about-section::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    rgb(168 216 255 / 8%),
+    transparent
+  );
 }
